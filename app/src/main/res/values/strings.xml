@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">InventoryManagement</string>
+    <string name="action_settings">Settings</string>
+    <string name="add">ADD RECORD</string>
+    <string name="back">BACK</string>
+    <string name="scanner">SCANNER/SEARCH BY NDC</string>
+    <string name="delete">DELETE RECORD</string>
+    <string name="update">UPDATE RECORD</string>
+    <string name="ndc">NDC</string>
+    <string name="drugName">Drug Name</string>
+    <string name="drugStrength">Drug Strength</string>
+    <string name="dosageForm">Dosage Form</string>
+    <string name="manufacturer">Manufacturer</string>
+    <string name="exportDatabase">EXPORT DATABASE</string>
+    <string name="importDatabase">IMPORT DATABASE</string>
+</resources>
