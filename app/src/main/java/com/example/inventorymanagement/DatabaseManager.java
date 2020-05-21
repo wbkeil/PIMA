@@ -280,26 +280,34 @@ public class DatabaseManager extends SQLiteOpenHelper
         }
     }
 
-    public void importCSV(InputStream is) throws IOException
-    {
+    public void importCSV(InputStream is) throws Exception{
         try {
             BufferedReader buffer = new BufferedReader(new InputStreamReader(is, "UTF-8"));
             String line = "";
-            //Priming read to remove header row
+            boolean isGoodFile = false;
+            //Priming read to check header row
             line = buffer.readLine();
-            while ((line = buffer.readLine()) != null)
-            {
-                String[] str = line.split(",");
+            if(line.equals("\"id\",\"NDC\",\"drugName\",\"drugStrength\",\"dosageForm\",\"manufacturer\",\"optionalDataTitle\",\"optionalData\"")) {
+                isGoodFile = true;
+            }
+            if (isGoodFile) {
+                while ((line = buffer.readLine()) != null) {
+                    String[] str = line.split(",");
 
-                String ndc = str[1].replaceAll("\"", ""),
-                        drugName = str[2].replaceAll("\"", ""),
-                        drugStrength = str[3].replaceAll("\"", ""),
-                        dosageForm = str[4].replaceAll("\"", ""),
-                        manufacturer = str[5].replaceAll("\"", ""),
-                        optionalTitle = str[6].replaceAll("\"", ""),
-                        optionalData = str[7].replaceAll("\"", "");
-                Drugs drugs = new Drugs(-1, ndc, drugName, drugStrength, dosageForm, manufacturer, optionalTitle, optionalData);
-                insert(drugs);
+                    String ndc = str[1].replaceAll("\"", ""),
+                            drugName = str[2].replaceAll("\"", ""),
+                            drugStrength = str[3].replaceAll("\"", ""),
+                            dosageForm = str[4].replaceAll("\"", ""),
+                            manufacturer = str[5].replaceAll("\"", ""),
+                            optionalTitle = str[6].replaceAll("\"", ""),
+                            optionalData = str[7].replaceAll("\"", "");
+                    Drugs drugs = new Drugs(-1, ndc, drugName, drugStrength, dosageForm, manufacturer, optionalTitle, optionalData);
+                    insert(drugs);
+                }
+            }
+            else
+            {
+                throw new InvalidFileException();
             }
         }
         catch (Exception ex)
